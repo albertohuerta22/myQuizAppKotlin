@@ -207,19 +207,19 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
                 )
             }
             2 -> {
-                tvOptionOne?.background = ContextCompat.getDrawable(
+                tvOptionTwo?.background = ContextCompat.getDrawable(
                     this,
                     drawable
                 )
             }
             3 -> {
-                tvOptionOne?.background = ContextCompat.getDrawable(
+                tvOptionThree?.background = ContextCompat.getDrawable(
                     this,
                     drawable
                 )
             }
             4 -> {
-                tvOptionOne?.background = ContextCompat.getDrawable(
+                tvOptionFour?.background = ContextCompat.getDrawable(
                     this,
                     drawable
                 )
