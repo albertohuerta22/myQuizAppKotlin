@@ -149,7 +149,7 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
                         btnSubmit?.text = "GO TO NEXT QUESTION"
                     }
 
-                    mSelectedOptionPosition = 0
+                    mSelectedOptionPosition = 0 // reset ; remove selected buttons at each new page
                 }
             }
 
