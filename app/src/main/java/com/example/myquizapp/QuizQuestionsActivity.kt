@@ -6,10 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.TextView
+import android.widget.*
 import androidx.core.content.ContextCompat
 
 class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
@@ -65,7 +62,7 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun setQuestion() {
-
+        defaultOptionView()
         val question: Question = mQuestionsList!![mCurrentPosition - 1]
 
         progressBar?.progress = mCurrentPosition // Setting the current progress in the progressbar using the position of question
@@ -118,7 +115,43 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
                     selectedOptionView(it, 4)
                 }
             }
+            R.id.btn_submit->{
 
+                if (mSelectedOptionPosition == 0) {
+
+                    mCurrentPosition++
+
+                    when {
+
+                        mCurrentPosition <= mQuestionsList!!.size -> {
+
+                            setQuestion()
+                        }
+                        else -> {
+
+                            Toast.makeText(this@QuizQuestionsActivity, "You have successfully completed the quiz.", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                } else {
+                    val question = mQuestionsList?.get(mCurrentPosition - 1)
+
+                    // This is to check if the answer is wrong
+                    if (question!!.correctAnswer != mSelectedOptionPosition) {
+                        answerView(mSelectedOptionPosition, R.drawable.wrong_option_border_bg)
+                    }
+
+                    // This is for correct answer
+                    answerView(question.correctAnswer, R.drawable.correct_option_border_bg)
+
+                    if (mCurrentPosition == mQuestionsList!!.size) {
+                        btnSubmit?.text = "FINISH"
+                    } else {
+                        btnSubmit?.text = "GO TO NEXT QUESTION"
+                    }
+
+                    mSelectedOptionPosition = 0
+                }
+            }
 
         }
     }
@@ -161,6 +194,36 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
                 this@QuizQuestionsActivity,
                 R.drawable.default_option_border_bg
             )
+        }
+    }
+
+
+    private fun answerView(answer: Int, drawable: Int) {
+        when(answer){
+            1 -> {
+                tvOptionOne?.background = ContextCompat.getDrawable(
+                    this,
+                    drawable
+                )
+            }
+            2 -> {
+                tvOptionOne?.background = ContextCompat.getDrawable(
+                    this,
+                    drawable
+                )
+            }
+            3 -> {
+                tvOptionOne?.background = ContextCompat.getDrawable(
+                    this,
+                    drawable
+                )
+            }
+            4 -> {
+                tvOptionOne?.background = ContextCompat.getDrawable(
+                    this,
+                    drawable
+                )
+            }
         }
     }
 }
