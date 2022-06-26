@@ -48,6 +48,11 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
         btnSubmit = findViewById(R.id.btn_submit)
 
 
+
+        mQuestionsList = Constants.getQuestions()
+
+        setQuestion()
+
         //onclick listeners
         tvOptionOne?.setOnClickListener(this)
         tvOptionTwo?.setOnClickListener(this)
@@ -55,17 +60,11 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
         tvOptionFour?.setOnClickListener(this)
         btnSubmit?.setOnClickListener(this)
 
-        val mQuestionsList = Constants.getQuestions()
 
-        setQuestion()
 
     }
 
     private fun setQuestion() {
-
-
-
-
 
         val question: Question = mQuestionsList!![mCurrentPosition - 1]
 
@@ -74,8 +73,8 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
 
 
         tvProgress?.text = "$mCurrentPosition" + "/" + progressBar?.max
-        tvQuestion?.text = question.question
 
+        tvQuestion?.text = question.question
         ivImage?.setImageResource(question.image)
 
         tvOptionOne?.text = question.optionOne
@@ -85,12 +84,58 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
 
 
         // if you reached the last question do this otherwise continue
-        if(mCurrentPosition == mQuestionsList!!.size){
-            btnSubmit?.text = "FINISH"
-        } else {
-            btnSubmit?.text = "SUBMIT"
-        }
+//        if(mCurrentPosition == mQuestionsList!!.size){
+//            btnSubmit?.text = "FINISH"
+//        } else {
+//            btnSubmit?.text = "SUBMIT"
+//        }
 
+    }
+
+
+
+
+
+    override fun onClick(view: View?) {
+        when (view?.id){
+            R.id.tv_option_one -> {
+                tvOptionOne?.let{
+                    selectedOptionView(it, 1)
+                }
+            }
+            R.id.tv_option_two -> {
+                tvOptionTwo?.let{
+                    selectedOptionView(it, 2)
+                }
+            }
+            R.id.tv_option_three -> {
+                tvOptionThree?.let{
+                    selectedOptionView(it, 3)
+                }
+            }
+            R.id.tv_option_four -> {
+                tvOptionFour?.let{
+                    selectedOptionView(it, 4)
+                }
+            }
+
+
+        }
+    }
+
+    private fun selectedOptionView(tv: TextView, selectedOptionNum: Int ){
+        defaultOptionView()
+
+        mSelectedOptionPosition = selectedOptionNum
+
+        tv.setTextColor(
+            Color.parseColor("#363A43")
+        )
+        tv.setTypeface(tv.typeface, Typeface.BOLD)
+        tv.background = ContextCompat.getDrawable(
+            this@QuizQuestionsActivity,
+            R.drawable.default_option_border_bg
+        )
     }
 
     private fun defaultOptionView(){
@@ -113,46 +158,9 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
             option.setTextColor(Color.parseColor("#7A8089"))
             option.typeface = Typeface.DEFAULT
             option.background = ContextCompat.getDrawable(
-                this,
+                this@QuizQuestionsActivity,
                 R.drawable.default_option_border_bg
             )
-        }
-    }
-
-    private fun selectedOptionView(tv: TextView, selectedOptionNum: Int ){
-        defaultOptionView()
-
-        mSelectedOptionPosition = selectedOptionNum
-
-        tv.setTextColor(Color.parseColor("#363A43"))
-        tv.setTypeface(tv.typeface, Typeface.BOLD)
-        tv.background = ContextCompat.getDrawable(
-            this,
-            R.drawable.default_option_border_bg
-        )
-    }
-
-    override fun onClick(view: View?) {
-        when (view?.id){
-            R.id.tv_option_one -> {
-                tvOptionOne?.let{
-                    selectedOptionView(it, 1)
-                }
-            }R.id.tv_option_two -> {
-                tvOptionTwo?.let{
-                    selectedOptionView(it, 2)
-                }
-            }R.id.tv_option_three -> {
-                tvOptionThree?.let{
-                    selectedOptionView(it, 3)
-                }
-            }R.id.tv_option_four -> {
-                tvOptionFour?.let{
-                    selectedOptionView(it, 4)
-                }
-            }
-
-
         }
     }
 }
